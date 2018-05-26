@@ -29,8 +29,14 @@ contract Election {
     }
 
     function vote( uint _candidateId ) public {
-        
+        // require that voter hasn't voted before.
+        require(! voters[msg.sender]);
+
+        //require valid candidate.
+        require(_candidateId > 0 && _candidateId <= candidatesCount);
+        // record voter has a vote.
         voters[msg.sender] = true;
+        // update candidate vote count.
         candidates[_candidateId].voteCount++;
     }
 }
