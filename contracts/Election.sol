@@ -8,13 +8,14 @@ contract Election {
         string name;
         uint voteCount;
     }
-
+    // Store Voters
+    mapping( address => bool ) public voters;
     // Store Candidate
     // Fetch Candidate
     mapping( uint => Candidate ) public candidates;
 
     // Store Cnadidate counts
-    uint public candidateCount;
+    uint public candidatesCount;
 
     // Constructor
     constructor() public {
@@ -23,7 +24,13 @@ contract Election {
     }
 
     function addCandidate( string _name ) private {
-        candidateCount++;
-        candidates[candidateCount] = Candidate( candidateCount, _name, 0 );
+        candidatesCount++;
+        candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
+    }
+
+    function vote( uint _candidateId ) public {
+        
+        voters[msg.sender] = true;
+        candidates[_candidateId].voteCount++;
     }
 }
